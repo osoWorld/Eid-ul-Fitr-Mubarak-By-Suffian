@@ -87,14 +87,27 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg-deep);font-
 .rosette-top{width:40px;height:40px;margin-bottom:24px;opacity:0.6}
 /* Screen 6 */
 #screen-6{background:radial-gradient(ellipse at center,rgba(201,168,76,0.08) 0%,var(--bg-deep) 70%)}
+/* Profile Image */
+.profile-image-wrap{position:relative;width:140px;height:140px;margin-bottom:20px;z-index:2;opacity:0;transform:scale(0.5)}
+.profile-image-backdrop{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:180px;height:180px;background:radial-gradient(circle,rgba(201,168,76,0.20),rgba(201,168,76,0.05) 60%,transparent 80%);border-radius:50%;filter:blur(12px);animation:profileBackdropPulse 3s ease-in-out infinite alternate}
+@keyframes profileBackdropPulse{0%{opacity:0.6;transform:translate(-50%,-50%) scale(1)}100%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}}
+.profile-ring-outer{position:absolute;top:50%;left:50%;width:152px;height:152px;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(201,168,76,0.35);animation:profileRingSpin 20s linear infinite}
+@keyframes profileRingSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.profile-ring-outer::before,.profile-ring-outer::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.profile-ring-outer::before{top:-4px;left:50%;transform:translateX(-50%);box-shadow:0 0 10px var(--gold),0 0 20px rgba(201,168,76,0.4)}
+.profile-ring-outer::after{bottom:-4px;left:50%;transform:translateX(-50%);box-shadow:0 0 10px var(--gold),0 0 20px rgba(201,168,76,0.4);width:6px;height:6px;opacity:0.6}
+.profile-ring-inner{position:absolute;top:50%;left:50%;width:146px;height:146px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid transparent;background:linear-gradient(var(--bg-deep),var(--bg-deep)) padding-box, linear-gradient(135deg,var(--gold),var(--gold-light),var(--amber),var(--gold)) border-box;animation:profileRingGlow 3s ease-in-out infinite alternate}
+@keyframes profileRingGlow{0%{filter:drop-shadow(0 0 6px rgba(201,168,76,0.4))}100%{filter:drop-shadow(0 0 14px rgba(201,168,76,0.7))}}
+.profile-img{width:134px;height:134px;border-radius:50%;object-fit:cover;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;border:3px solid var(--bg-deep);box-shadow:0 0 30px rgba(201,168,76,0.2)}
+.profile-sparkle{position:absolute;width:4px;height:4px;background:var(--gold-light);border-radius:50%;opacity:0;box-shadow:0 0 6px var(--gold-light)}
 .from-label{font-family:'Lato',sans-serif;font-weight:300;font-size:0.85rem;color:var(--muted);letter-spacing:5px;text-transform:uppercase;margin-bottom:12px}
-.suffian-name{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,7vw,3rem);color:var(--gold);margin-bottom:16px;display:flex;justify-content:center;flex-wrap:wrap}
+.suffian-name{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,7vw,3rem);color:var(--gold);margin-bottom:12px;display:flex;justify-content:center;flex-wrap:wrap}
 .suffian-name span{display:inline-block;opacity:0}
-.closing-wish{font-family:'Lato',sans-serif;font-weight:300;font-size:0.95rem;color:var(--cream);opacity:0;margin-bottom:32px}
+.closing-wish{font-family:'Lato',sans-serif;font-weight:300;font-size:0.95rem;color:var(--cream);opacity:0;margin-bottom:28px}
 #share-btn{background:var(--glass-bg);border:1px solid var(--glass-border);backdrop-filter:var(--glass-blur);color:var(--gold);font-family:'Lato',sans-serif;font-size:0.9rem;padding:14px 32px;border-radius:50px;cursor:pointer;letter-spacing:1px;transition:all 0.3s ease;opacity:0;transform:scale(0.9)}
 #share-btn:hover{background:rgba(201,168,76,0.15);border-color:var(--gold);transform:scale(1.05)}
 #share-btn:active{transform:scale(0.94)}
-.bottom-ornament{margin-top:32px;opacity:0.4}
+.bottom-ornament{margin-top:28px;opacity:0.4}
 /* Particles containers */
 #particles-stars,#particles-stars-6{position:absolute;width:100%;height:100%;top:0;left:0;z-index:0}
 /* Custom cursor */
@@ -207,12 +220,20 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg-deep);font-
 <!-- SCREEN 6: Closing -->
 <section class="screen" id="screen-6">
 <div id="particles-stars-6"></div>
-<svg width="60" height="60" viewBox="0 0 120 120" aria-hidden="true" style="position:relative;z-index:2;margin-bottom:24px;opacity:0" id="closing-moon">
-<defs><filter id="cmGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-<circle cx="50" cy="60" r="32" fill="none" stroke="#C9A84C" stroke-width="2" filter="url(#cmGlow)"/><circle cx="66" cy="52" r="25" fill="#080B14"/>
-<circle cx="85" cy="35" r="3" fill="#F0D080"/><circle cx="78" cy="55" r="2" fill="#F0D080" opacity="0.7"/><circle cx="95" cy="48" r="1.5" fill="#F0D080" opacity="0.5"/>
-</svg>
-<div class="from-label" style="position:relative;z-index:2;opacity:0" id="from-label">From</div>
+<!-- Profile Image -->
+<div class="profile-image-wrap" id="profile-wrap">
+<div class="profile-image-backdrop"></div>
+<div class="profile-ring-outer"></div>
+<div class="profile-ring-inner"></div>
+<img class="profile-img" src="suffian.png" alt="Muhammad Suffian" loading="eager" />
+<div class="profile-sparkle" style="top:0;left:50%"></div>
+<div class="profile-sparkle" style="top:50%;right:0"></div>
+<div class="profile-sparkle" style="bottom:0;left:50%"></div>
+<div class="profile-sparkle" style="top:50%;left:0"></div>
+<div class="profile-sparkle" style="top:10%;right:10%"></div>
+<div class="profile-sparkle" style="bottom:10%;left:10%"></div>
+</div>
+<div class="from-label" style="position:relative;z-index:2;opacity:0" id="from-label">With Love, From</div>
 <div class="suffian-name" id="suffian-name" style="position:relative;z-index:2"></div>
 <div class="closing-wish" id="closing-wish" style="position:relative;z-index:2">Wishing you a blessed Eid ul Fitr 🌙</div>
 <button id="share-btn" onclick="handleShare()" style="position:relative;z-index:2">Share This Greeting ✨</button>
@@ -365,11 +386,32 @@ function animateScreen5() {
 
 function animateScreen6() {
   initStars6();
-  gsap.fromTo('#closing-moon', { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: 'back.out(1.7)' });
-  gsap.to('#from-label', { opacity: 1, duration: 0.6, delay: 0.3 });
-  gsap.fromTo('#suffian-name span', { y: -40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, delay: 0.5, ease: 'back.out(1.4)' });
-  gsap.to('#closing-wish', { opacity: 1, duration: 0.8, delay: 1.2 });
-  gsap.to('#share-btn', { opacity: 1, scale: 1, duration: 0.5, delay: 1.6, ease: 'back.out(2)' });
+  // Profile image grand entrance
+  const profileWrap = document.getElementById('profile-wrap');
+  gsap.fromTo(profileWrap, 
+    { scale: 0.3, opacity: 0, rotation: -15 },
+    { scale: 1, opacity: 1, rotation: 0, duration: 1.2, ease: 'back.out(1.7)' }
+  );
+  // Sparkles orbit animation
+  const sparkles = document.querySelectorAll('.profile-sparkle');
+  sparkles.forEach((sp, i) => {
+    gsap.fromTo(sp,
+      { opacity: 0, scale: 0 },
+      { opacity: 1, scale: 1, duration: 0.4, delay: 1.0 + i * 0.1, ease: 'back.out(2)',
+        onComplete: () => {
+          gsap.to(sp, { opacity: 0.3, scale: 0.6, duration: 1 + Math.random(), repeat: -1, yoyo: true, ease: 'sine.inOut', delay: Math.random() * 0.5 });
+        }
+      }
+    );
+  });
+  // From label
+  gsap.to('#from-label', { opacity: 1, duration: 0.6, delay: 0.6 });
+  // Name letters cascade
+  gsap.fromTo('#suffian-name span', { y: -40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, delay: 0.8, ease: 'back.out(1.4)' });
+  // Closing wish
+  gsap.to('#closing-wish', { opacity: 1, duration: 0.8, delay: 1.6 });
+  // Share button
+  gsap.to('#share-btn', { opacity: 1, scale: 1, duration: 0.5, delay: 2.0, ease: 'back.out(2)' });
 }
 
 // ===== PARTICLES =====
